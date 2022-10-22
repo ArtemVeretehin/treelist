@@ -6,6 +6,7 @@ import "./List_Style.css"
 
 const TreeList = () => {
 
+    //Начальные данные об узлах
     const treeData = [
         {
             key: "0",
@@ -14,19 +15,14 @@ const TreeList = () => {
         },
     ];
 
-    const initialTree = [
-        {
-            key: "0",
-            label: "Documents",
-            icon: "fa fa-folder",
-        },
-    ];
-
+    //Хук, хранящий текущие компоненты дерева
     const [listElements, setlistElements] = useState(treeData)
+    //Хук, хранящий состояние попапа ввода данных на изменение узла (скрыт/отображен)
     const [popupDisplay, setPopupDisplay] = useState(false)
+    //Хук, хранящий ключ выбранного узла
     const [rootKey, setRootKey] = useState(0);
 
-
+    //Функция изменения узла
     const EditValue = (NewValue) => {
         if (NewValue === "") {
             alert("Введите новое значение узла!")
@@ -36,7 +32,7 @@ const TreeList = () => {
         return true
     }
 
-
+    //Функция поиска и изменения выбранного узла
     const EditItemNested = (arr, itemKey, nestingKey, newValue) => (
         arr.reduce((a, item) => {
             if (a) return arr;
@@ -57,6 +53,7 @@ const TreeList = () => {
         }, null)
     );
 
+    //Функция поиска и удаления выбранного узла
     const DeleteItemNested = (arr, itemId, nestingKey) => (
         arr.reduce((a, item) => {
             
@@ -88,6 +85,7 @@ const TreeList = () => {
         }, null)
     );
 
+    //Функция добавления дочернего узла в выбранный родительский узел
     const AddItemNested = (arr, itemId, nestingKey) => (
         arr.reduce((a, item) => {
             
@@ -131,13 +129,15 @@ const TreeList = () => {
         }, null)
     );
 
+    //Функция установки значения хука, хранящего ключ выбранного узда
     const getKey = (key) => setRootKey(key)
 
-
+    //Формирование страницы (шапка, список, элементы управления)
     return (
         <React.Fragment>
             <div style={{ border: "solid", borderColor: "#579457", width: "100vw", padding: "15px", backgroundColor: "whitesmoke" }}>
                 <h2>Tree</h2>
+           
                 <Tree data={listElements} getKey={getKey} rootKey={rootKey} />
                 
                 <div style={{ textAlign: "center" }}>
@@ -145,7 +145,7 @@ const TreeList = () => {
                     <button className="Control_buttons" onClick={() => AddItemNested(listElements, rootKey, "children")}>Add</button>
                     <button className="Control_buttons" onClick={() => setPopupDisplay(true)}>Edit</button>
                     <button className="Control_buttons" onClick={() => DeleteItemNested(listElements, rootKey, "children")}>Delete</button>
-                    <button className="Control_buttons" onClick={() => setlistElements(initialTree)}>Reset</button>
+                    <button className="Control_buttons" onClick={() => setlistElements(treeData)}>Reset</button>
                     <Popup display={popupDisplay} setDisplay={setPopupDisplay} EditValue={EditValue} />
                 </div>
             </div>

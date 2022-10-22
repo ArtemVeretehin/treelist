@@ -1,5 +1,6 @@
 import TreeNode from './TreeNode';
 
+//Генерация элементов узла на основании данных(TreeList.js, хук listElements) об узлах
 const Tree = ({ data = [], getKey, rootKey }) => {
   return (
       <ul>    
